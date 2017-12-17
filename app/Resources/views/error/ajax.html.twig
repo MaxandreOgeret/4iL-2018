@@ -1,0 +1,20 @@
+{% extends "initial/index.html.twig" %}
+
+{% block pagecontent %}
+
+    <div style="margin-top: 35px" class="row">
+        <div class="col-md-12">
+
+            <div class="text-center">
+                <div class="alert alert-danger" role="alert">
+                    <img style="width: 110px; height: auto;" src="{{ asset('img/logo/carcrash.png') }}">
+                    <strong>Oh non!</strong> quelque-chose n'a pas fonctionné. Vous pouvez essayer de <a href="{{ path('homepage') }}" class="alert-link">recharger</a> la page.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+{% endblock %}

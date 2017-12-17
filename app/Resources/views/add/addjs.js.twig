@@ -1,0 +1,45 @@
+
+var fileInput = $('#appbundle_article_imagePath');
+fileInput.bind('change', function() {
+    var size = this.files[0].size;
+    var ext = this.files[0].name.split('.').pop();
+
+    switch (ext) {
+        case 'jpg':
+        case 'jpeg':
+        case 'bmp':
+        case 'png':
+        case 'gif':
+            break;
+        default:
+            alert('seulement jpg, bmp, png, gif');
+            fileInput.val('');
+    }
+
+    if (size > 100000) {
+        alert('Le fichier est trop lourd.')
+        fileInput.val('');
+    }
+})
+
+var deleteimg = $('#deleteimg')
+var haveImg = $('#have_img_input')
+var noImg = $('#no_img_input')
+
+{% if action == 'Edition' %}
+deleteimg.bind('click', function() {
+    console.log('{{ form.vars.data.id }}');
+
+    var jqxhr = $.ajax( "{{ path('delimg', {'id' : form.vars.data.id}) }}" )
+        .done(function() {
+            haveImg.hide();
+            noImg.show();
+            fileInput.val('');
+        })
+        .fail(function() {
+            alert( "error" );
+        })
+        .always(function() {
+        });
+})
+{% endif %}
