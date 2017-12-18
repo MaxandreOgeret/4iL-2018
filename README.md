@@ -1,8 +1,7 @@
-Symfony Standard Edition
-========================
+4IL-2018 - Really Simple CMS made with Symfony
+==============================================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
+Welcome to this repo featuring a Really Simple CMS made with Symfony
 
 For details on how to download and get started with Symfony, see the
 [Installation][1] chapter of the Symfony Documentation.
@@ -12,15 +11,13 @@ What's inside?
 
 The Symfony Standard Edition is configured with the following defaults:
 
-  * An AppBundle you can use to start coding;
+  * A unique bundle :  AppBundle
 
-  * Twig as the only configured template engine;
+  * Twig as the template engine
 
-  * Doctrine ORM/DBAL;
-
-  * Swiftmailer;
-
-  * Annotations enabled for everything.
+  * Doctrine ORM;
+  
+  * FOSUserBundle
 
 It comes pre-configured with the following bundles:
 
@@ -55,6 +52,9 @@ It comes pre-configured with the following bundles:
 
   * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
     integration
+    
+  * [**FOSUserBundle**][15] - Adds support for a database-backed user system in Symfony
+    integration
 
 All libraries and bundles included in the Symfony Standard Edition are
 released under the MIT or BSD license.
@@ -70,3 +70,4 @@ Enjoy!
 [11]: https://symfony.com/doc/3.3/logging.html
 [13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
 [14]: https://symfony.com/doc/current/setup/built_in_web_server.html
+[15]: https://github.com/FriendsOfSymfony/FOSUserBundle
