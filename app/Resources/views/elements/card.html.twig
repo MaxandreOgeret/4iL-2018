@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="background-color: #51575d;">
+                <span><h4 style="display: inline; color: whitesmoke">{{ title }}</h4></span>
+                {% if app.user %}
+                    <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar with button groups">
+                        <span style="color: lightgray; margin-right: 5px" >{{ date }}</span>
+                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                            <a class="btn btn-secondary" href="{{ path('editarticle', {'id': id}) }}">
+                                <i class="float-right fa fa-edit"></i>
+                            </a>
+                            <div class="btn btn-secondary delbtn" artid="{{ id }}">
+                                <i class="float-right fa fa-trash"></i>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar with button groups">
+                        <span style="color: lightgray; margin-right: 5px" >{{ date }}</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if image is not null %}
+                <span style="max-height: 150px; overflow: hidden;" class="d-lg-none">
+                    <img class="card-img-top" src="{{ asset('img/user/'~image) }}"
+                         alt="Card image cap">
+                </span>
+                <span style="max-height: 300px; overflow: hidden;" class="d-none d-lg-block">
+                    <img class="card-img-top" src="{{ asset('img/user/'~image) }}"
+                         alt="Card image cap">
+                </span>
+            {% endif %}
+
+            <div class="card-block">
+                <p class="card-text">
+                    {{ text|nl2br }}
+                </p>
+                {% if link1 is defined %}
+                    <a href="#" class="card-link">{{ link1 }}</a>
+                {% endif %}
+                {% if link2 is defined %}
+                    <a href="#" class="card-link">{{ link2 }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

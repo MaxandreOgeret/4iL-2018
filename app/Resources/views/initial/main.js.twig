@@ -1,0 +1,44 @@
+var pageContent = $('#page-content');
+
+updateArticles();
+
+$( document ).ready(function() {
+    $("#page-content").on("click",".delbtn", function(event)
+    {
+
+        var btn = event.target;
+        var tag = btn.tagName.toLowerCase();
+
+        if (tag === 'i') {
+            var id = $(btn).parent().attr('artid');
+        } else if (tag === 'div') {
+            var id = $(btn).attr('artid');
+        }
+
+        if (confirm('Vraiment ?')) {
+
+            $.ajax({url: "{{ path('delarticle') }}"+"/"+id, success: function(result){
+                    $(btn).closest('.row').slideUp();
+                }});
+        }
+    });
+});
+
+function updateArticles() {
+    var jqxhr = $.getJSON( "{{ path('getarticles') }}", function() {
+    })
+        .done(function(data) {
+
+            pageContent.slideUp(function () {
+                pageContent.html(data);
+                pageContent.slideDown();
+            })
+        })
+
+        .fail(function() {
+            window.location.replace('{{ path('ajax-error') }}');
+        })
+
+        .always(function() {
+        });
+}

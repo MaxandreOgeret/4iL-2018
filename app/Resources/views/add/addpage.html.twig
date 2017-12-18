@@ -1,0 +1,37 @@
+{% extends "initial/index.html.twig" %}
+
+{% block pagecontent %}
+    {{ form_start(form) }}
+        <h3>{{ action }} article</h3><hr><br>
+        <div class="form-group">
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control'} }) }}
+        </div>
+        <div id="have_img_input" class="form-group" {% if form.vars.data.image is null %}style="display: none;"{% endif %}>
+            {{ form_label(form.image) }}
+            <div class="input-group">
+                {{ form_widget(form.image, {'attr': {'class': 'form-control'} }) }}
+                {{ form_row(form.image) }}
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-danger inline" id="deleteimg">Supprimer</button>
+                </span>
+            </div>
+        </div>
+        <div id="no_img_input" class="form-group" {% if form.vars.data.image is not null %}style="display: none;"{% endif %}>
+            {{ form_label(form.imagePath) }}
+            {{ form_widget(form.imagePath, {'attr': {'class': 'form-control'} }) }}
+            {{ form_row(form.imagePath) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.text) }}
+            {{ form_widget(form.text, {'attr': {'class': 'form-control'} }) }}
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        {{ include('add/addjs.js.twig') }}
+    </script>
+{% endblock %}
