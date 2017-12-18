@@ -39,3 +39,8 @@ body {padding-top: 60px;}
     height: 50%;
     width: auto;
 }
+
+img.center {
+    display: block;
+    margin: 0 auto;
+}
