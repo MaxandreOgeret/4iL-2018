@@ -1,0 +1,19 @@
+{% extends "initial/index.html.twig" %}
+
+{% block pagecontent %}
+
+    <div style="margin-top: 35px" class="row">
+        <div class="col-md-12">
+
+            <div class="text-center">
+                <div class="alert alert-warning" role="alert">
+                    <img style="width: 110px; height: auto;" src="{{ asset('img/logo/wip.png') }}">
+                    <strong> Cette page est en construction ! </strong>Merci de revenir plus tard. Vous pouvez <a href="{{ path('homepage') }}" class="alert-link">retourner à la page d'accueil</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+{% endblock %}
