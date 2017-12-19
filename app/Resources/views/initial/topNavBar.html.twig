@@ -4,22 +4,27 @@
             <img src="{{ asset('img/logo/4il.png') }}" style="width: 40px; height: auto">
             Equipage 4IL
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+
         <div class="d-lg-none">
-        {% if not app.user %}
-            <a href="{{ path('fos_user_security_login') }}">
-                <div style="color: darkgrey" class="fa fa-lock fa-2x float-right" aria-hidden="true"></div>
-            </a>
-        {% else %}
-            <div class="navbar-brand">
-                <a class="btn btn-secondary" href="{{ path('add') }}">
-                    <i class="fa fa-user"></i>
-                    {{ app.user.username }}
-                </a>
+            <div class="row">
+                <div class="col-auto">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="margin-right: 20px">
+                        <span class="navbar-toggler-icon float-right"></span>
+                    </button>
+                    {% if not app.user %}
+                        <a href="{{ path('fos_user_security_login') }}">
+                            <div style="color: darkgrey; margin-top: 5px" class="fa fa-lock fa-2x float-right" aria-hidden="true"></div>
+                        </a>
+                    {% else %}
+                        <div class="navbar-brand">
+                            <a class="btn btn-secondary" href="{{ path('add') }}" style="margin-top: -20px;">
+                                <i class="fa fa-user"></i>
+                                {{ app.user.username }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
-        {% endif %}
         </div>
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
