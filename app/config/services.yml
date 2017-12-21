@@ -34,3 +34,8 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    app.article.manager:
+        class: AppBundle\Manager\ArticleManager
+        autowire: true
+        public: true

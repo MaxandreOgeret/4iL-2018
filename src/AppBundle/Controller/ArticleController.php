@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Article;
 use AppBundle\Form\ArticleType;
+use AppBundle\Manager\ArticleManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -22,6 +23,13 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ArticleController extends Controller
 {
+    public $am;
+
+    public function __construct(ArticleManager $am)
+    {
+        $this->am = $am;
+    }
+
     public function identityChecker()
     {
         $securityContext = $this->container->get('security.authorization_checker');
@@ -95,6 +103,8 @@ class ArticleController extends Controller
      */
     public function handleFormAction(Request $request, Article $article = null)
     {
+        $this->am->happyDump();
+
         $this->identityChecker();
 
         if (is_null($article)) {
@@ -113,6 +123,7 @@ class ArticleController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $time = new \DateTime('now');
+            dump($form->get('base64')->getData());die;
 
             if (!is_null($article->getImagePath())) {
                 /** @var UploadedFile $image */
