@@ -103,8 +103,6 @@ class ArticleController extends Controller
      */
     public function handleFormAction(Request $request, Article $article = null)
     {
-        $this->am->happyDump();
-
         $this->identityChecker();
 
         if (is_null($article)) {
@@ -123,29 +121,18 @@ class ArticleController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $time = new \DateTime('now');
-            dump($form->get('base64')->getData());die;
 
-            if (!is_null($article->getImagePath())) {
-                /** @var UploadedFile $image */
-                $image = $article->getImagePath();
-                $size = $image->getSize();
-                $ext = $image->guessExtension();
+            /**
+             * filename = the file filename if the file exists. If not $filename = null;
+             */
+            $fileName = $this->am->handleBase64Image($form->get('base64')->getData());
 
-                //server-side controls - EXTENSION AND SIZE
-                if (($size <= Article::MAXIMGSIZE*1000) && (in_array($ext, Article::IMGEXT))) {
-                    $fileName = md5(uniqid()).'.'.$ext;
-                    $image->move(
-                        $this->getParameter('image_directory'),
-                        $fileName
-                    );
-                    $article->setImage($fileName);
+            if (!is_null($fileName)) {
+                $article->setImage($fileName);
                 } else {
-                    dump($size <= Article::MAXIMGSIZE*100);
-                    dump(in_array($ext, Article::IMGEXT));
                     $article->setImage(null);
                     $article->setImagePath(null);
                 }
-            }
 
             $article->setDate($time);
             $article->setText($article->getText());

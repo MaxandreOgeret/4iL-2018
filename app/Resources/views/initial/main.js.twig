@@ -31,7 +31,9 @@ function updateArticles() {
 
             pageContent.slideUp(function () {
                 pageContent.html(data);
-                pageContent.slideDown();
+                pageContent.slideDown(function () {
+                    $('.footer').css('opacity', '1');
+                });
             })
         })
 

@@ -1,11 +1,11 @@
 {% extends "initial/index.html.twig" %}
 
 {% block headcss %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.5.0/croppie.min.css"/>
+    <link rel="stylesheet" href="{{ asset('css/croppie.css') }}"/>
 {% endblock %}
 
 {% block headjs %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.5.0/croppie.min.js"></script>
+    <script src="{{ asset('js/croppie.js') }}"></script>
 {% endblock %}
 
 {% block pagecontent %}
@@ -23,7 +23,7 @@
             {{ form_row(form.image) }}
             <span class="input-group-btn">
                     <button type="button" class="btn btn-danger inline" id="deleteimg">Supprimer</button>
-                </span>
+            </span>
         </div>
     </div>
     <div id="no_img_input" class="form-group"
@@ -33,6 +33,7 @@
         {{ form_row(form.imagePath) }}
     </div>
     <div id="imagePreview" style="display: none;"></div>
+    <button id="imageReset" type="button" class="btn btn-danger w-100" style="margin-top: 50px;margin-bottom: 30px; display: none;">Image Reset</button>
     <div class="form-group">
         {{ form_label(form.text) }}
         {{ form_widget(form.text, {'attr': {'class': 'form-control', 'style' : 'height: 350px;'} }) }}

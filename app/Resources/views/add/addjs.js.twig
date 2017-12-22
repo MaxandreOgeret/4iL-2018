@@ -1,7 +1,9 @@
-var cropping = $('#imagePreview').croppie({
+croppieDiv = $('#imagePreview');
+
+var cropping = croppieDiv.croppie({
     viewport: {width: 370, height: 100},
 });
-
+var imageReset = $('#imageReset');
 var fileInput = $('#appbundle_article_imagePath');
 fileInput.bind('change', function() {
     var file = this.files[0];
@@ -19,17 +21,20 @@ fileInput.bind('change', function() {
         default:
             alert('seulement jpg, bmp, png, gif');
             fileInput.val('');
+            return
     }
 
-    if (size > 100000) {
+    if (size > 200000) {
         alert('Le fichier est trop lourd.')
         fileInput.val('');
+        return
     }
 
     imagePreview(file, function (e) {
         var url = e.target.result;
         cropping = initializeCropper(url);
-        $('#imagePreview').show();
+        croppieDiv.show();
+        imageReset.show()
     });
 });
 
@@ -47,6 +52,11 @@ function imagePreview(image, callback) {
     reader.readAsDataURL(image);
 }
 
+imageReset.click(function (e) {
+    croppieDiv.hide();
+    imageReset.hide();
+    fileInput.val('');
+})
 
 var sendBtn = $('#appbundle_article_Envoyer')
 sendBtn.click(function (e) {
@@ -54,7 +64,8 @@ sendBtn.click(function (e) {
     cropping.croppie('result', {
         type: 'canvas',
         size: 'original',
-        format: 'jpeg'
+        format: 'jpeg',
+        quality: 0.5
     }).then(function (croppedData) {
         $('#appbundle_article_base64').val(croppedData);
         $('form').submit();
