@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Article
 {
-    const MAXIMGSIZE = 100;
     const IMGEXT = ['jpeg', 'jpg', 'bmp', 'png'];
 
     /**
@@ -43,7 +42,7 @@ class Article
     /**
      * @var string
      *
-     * @Assert\File( maxSize = "100k", mimeTypesMessage = "Please upload a valid Image")
+     * @Assert\File( maxSize = "200k", mimeTypesMessage = "Please upload a valid Image")
      */
     private $imagePath;
 

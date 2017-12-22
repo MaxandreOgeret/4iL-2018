@@ -34,3 +34,7 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    AppBundle\Manager\ArticleManager:
+        arguments:
+            $imageDirectory: '%image_directory%'

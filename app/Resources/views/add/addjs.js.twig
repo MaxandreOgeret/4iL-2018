@@ -1,8 +1,15 @@
+croppieDiv = $('#imagePreview');
 
+var cropping = croppieDiv.croppie({
+    viewport: {width: 370, height: 100},
+});
+var imageReset = $('#imageReset');
 var fileInput = $('#appbundle_article_imagePath');
 fileInput.bind('change', function() {
-    var size = this.files[0].size;
-    var ext = this.files[0].name.split('.').pop();
+    var file = this.files[0];
+    var size = file.size;
+    var ext = file.name.split('.').pop();
+    var cropping;
 
     switch (ext) {
         case 'jpg':
@@ -14,12 +21,55 @@ fileInput.bind('change', function() {
         default:
             alert('seulement jpg, bmp, png, gif');
             fileInput.val('');
+            return
     }
 
-    if (size > 100000) {
+    if (size > 200000) {
         alert('Le fichier est trop lourd.')
         fileInput.val('');
+        return
     }
+
+    imagePreview(file, function (e) {
+        var url = e.target.result;
+        cropping = initializeCropper(url);
+        croppieDiv.show();
+        imageReset.show()
+    });
+});
+
+function initializeCropper(url) {
+
+    cropping.croppie('bind', {
+        url: url,
+    });
+    return cropping;
+}
+
+function imagePreview(image, callback) {
+    var reader = new FileReader();
+    reader.onload = callback;
+    reader.readAsDataURL(image);
+}
+
+imageReset.click(function (e) {
+    croppieDiv.hide();
+    imageReset.hide();
+    fileInput.val('');
+})
+
+var sendBtn = $('#appbundle_article_Envoyer')
+sendBtn.click(function (e) {
+    e.preventDefault();
+    cropping.croppie('result', {
+        type: 'canvas',
+        size: 'original',
+        format: 'jpeg',
+        quality: 0.5
+    }).then(function (croppedData) {
+        $('#appbundle_article_base64').val(croppedData);
+        $('form').submit();
+    })
 })
 
 var deleteimg = $('#deleteimg')
@@ -28,7 +78,6 @@ var noImg = $('#no_img_input')
 
 {% if action == 'Edition' %}
 deleteimg.bind('click', function() {
-    console.log('{{ form.vars.data.id }}');
 
     var jqxhr = $.ajax( "{{ path('delimg', {'id' : form.vars.data.id}) }}" )
         .done(function() {
