@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Article;
 use AppBundle\Form\ArticleType;
+use AppBundle\Manager\ArticleManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -22,6 +23,13 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ArticleController extends Controller
 {
+    public $am;
+
+    public function __construct(ArticleManager $am)
+    {
+        $this->am = $am;
+    }
+
     public function identityChecker()
     {
         $securityContext = $this->container->get('security.authorization_checker');
@@ -90,7 +98,6 @@ class ArticleController extends Controller
     /**
      * @param Request $request
      * @param Article|null $article
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("handle-article-form/{article}", name="handlearticleform", )
      */
     public function handleFormAction(Request $request, Article $article = null)
@@ -114,27 +121,22 @@ class ArticleController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $time = new \DateTime('now');
 
-            if (!is_null($article->getImagePath())) {
-                /** @var UploadedFile $image */
-                $image = $article->getImagePath();
-                $size = $image->getSize();
-                $ext = $image->guessExtension();
+            $img = ($article->getImage());
+            $imgPath = ($article->getImagePath());
 
-                //server-side controls - EXTENSION AND SIZE
-                if (($size <= Article::MAXIMGSIZE*1000) && (in_array($ext, Article::IMGEXT))) {
-                    $fileName = md5(uniqid()).'.'.$ext;
-                    $image->move(
-                        $this->getParameter('image_directory'),
-                        $fileName
-                    );
-                    $article->setImage($fileName);
-                } else {
-                    dump($size <= Article::MAXIMGSIZE*100);
-                    dump(in_array($ext, Article::IMGEXT));
+            /**
+             * filename = the file filename if the file exists. If not $filename = null;
+             */
+            $fileName = $this->am->handleBase64Image($form->get('base64')->getData());
+
+            if ((!is_null($img) && !is_null($imgPath) && !is_null($fileName))  ||
+                (is_null($img) && !is_null($imgPath) && !is_null($fileName))
+            ) {
+                $article->setImage($fileName);
+                } elseif (is_null($img) && is_null($imgPath) && is_null($fileName)) {
                     $article->setImage(null);
                     $article->setImagePath(null);
                 }
-            }
 
             $article->setDate($time);
             $article->setText($article->getText());
@@ -143,7 +145,7 @@ class ArticleController extends Controller
             $em->persist($article);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('homepage'));
+            return $this->forward('AppBundle:Initial:initial');
         } else {
             throw new Exception('Form is not valid or not submitted');
         }

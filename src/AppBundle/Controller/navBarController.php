@@ -15,24 +15,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class InitialController extends Controller
+class navBarController extends Controller
 {
-
-
     /**
-     * @Route("/", name="homepage")
+     * @Route("/notmapped", name="notmapped")
      */
-    public function initialAction() {
-        return $this->render(':initial:index.html.twig');
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("ajaxerror", name="ajax-error")
-     */
-    public function ajaxErrorAction()
-    {
-        return $this->render("error/ajax.html.twig");
+    public function notmappedAction() {
+        return $this->render('error/notmapped.twig');
     }
 
 }
