@@ -1,10 +1,12 @@
 croppieDiv = $('#imagePreview');
-
+var imgResetBool = false;
 var cropping = croppieDiv.croppie({
-    viewport: {width: 370, height: 100},
+    viewport: {width: 277, height: 100},
 });
 var imageReset = $('#imageReset');
 var fileInput = $('#appbundle_article_imagePath');
+var haveImg = $('#have_img_input')
+
 fileInput.bind('change', function() {
     var file = this.files[0];
     var size = file.size;
@@ -21,12 +23,14 @@ fileInput.bind('change', function() {
         default:
             alert('seulement jpg, bmp, png, gif');
             fileInput.val('');
+            haveImg.val('');
             return
     }
 
-    if (size > 200000) {
+    if (size > 500000) {
         alert('Le fichier est trop lourd.')
         fileInput.val('');
+        haveImg.val('');
         return
     }
 
@@ -36,6 +40,10 @@ fileInput.bind('change', function() {
         croppieDiv.show();
         imageReset.show()
     });
+});
+
+fileInput.bind('click', function() {
+    imgResetBool = false;
 });
 
 function initializeCropper(url) {
@@ -53,37 +61,55 @@ function imagePreview(image, callback) {
 }
 
 imageReset.click(function (e) {
+    e.preventDefault();
     croppieDiv.hide();
     imageReset.hide();
+
+    haveImg.hide();
+    noImg.show();
     fileInput.val('');
+    haveImg.val('');
+    imgResetBool = true;
 })
 
 var sendBtn = $('#appbundle_article_Envoyer')
 sendBtn.click(function (e) {
     e.preventDefault();
+
+    if (imgResetBool) {
+        $('#appbundle_article_base64').val('');
+        $('form').submit();
+    }
+
     cropping.croppie('result', {
         type: 'canvas',
         size: 'original',
         format: 'jpeg',
         quality: 0.5
     }).then(function (croppedData) {
-        $('#appbundle_article_base64').val(croppedData);
+        if (!imgResetBool) {
+            $('#appbundle_article_base64').val(croppedData);
+        } else {
+            $('#appbundle_article_base64').val('');
+        }
         $('form').submit();
     })
 })
 
-var deleteimg = $('#deleteimg')
-var haveImg = $('#have_img_input')
+var deleteimgbtn = $('#deleteimg')
 var noImg = $('#no_img_input')
 
 {% if action == 'Edition' %}
-deleteimg.bind('click', function() {
+deleteimgbtn.bind('click', function() {
 
     var jqxhr = $.ajax( "{{ path('delimg', {'id' : form.vars.data.id}) }}" )
         .done(function() {
             haveImg.hide();
             noImg.show();
             fileInput.val('');
+            haveImg.val('');
+            $('#appbundle_article_image').val('');
+            imgResetBool = true;
         })
         .fail(function() {
             alert( "error" );

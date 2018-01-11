@@ -19,9 +19,14 @@ class ArticleManager
 
     public function handleBase64Image($base64String)
     {
-        $fileName = md5(uniqid()).'.jpeg';
-        /** @var resource $source */
-        $source = fopen($base64String, 'r');
+        if (empty($base64String)) {
+            return null;
+        } else {
+            $fileName = md5(uniqid()).'.jpeg';
+
+            /** @var resource $source */
+            $source = fopen($base64String, 'r');
+        }
 
         if ($this->imageStreamValid($source)) {
             $destination = fopen($this->imageDirectory.$fileName, 'w');
@@ -39,7 +44,7 @@ class ArticleManager
     {
         $metadata = stream_get_meta_data($stream);
 
-        if ($metadata['base64'] !== true || $metadata['mediatype'] !== "image/jpeg" || strlen($metadata['uri']) > 250000) {
+        if ($metadata['base64'] !== true || $metadata['mediatype'] !== "image/jpeg" || strlen($metadata['uri']) > 550000) {
             return false;
         } else {
             return true;

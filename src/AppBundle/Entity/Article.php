@@ -42,7 +42,7 @@ class Article
     /**
      * @var string
      *
-     * @Assert\File( maxSize = "200k", mimeTypesMessage = "Please upload a valid Image")
+     * @Assert\File( maxSize = "500k", mimeTypesMessage = "Please upload a valid Image")
      */
     private $imagePath;
 

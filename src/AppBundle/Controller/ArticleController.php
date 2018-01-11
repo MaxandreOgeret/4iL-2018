@@ -98,7 +98,6 @@ class ArticleController extends Controller
     /**
      * @param Request $request
      * @param Article|null $article
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("handle-article-form/{article}", name="handlearticleform", )
      */
     public function handleFormAction(Request $request, Article $article = null)
@@ -122,14 +121,19 @@ class ArticleController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $time = new \DateTime('now');
 
+            $img = ($article->getImage());
+            $imgPath = ($article->getImagePath());
+
             /**
              * filename = the file filename if the file exists. If not $filename = null;
              */
             $fileName = $this->am->handleBase64Image($form->get('base64')->getData());
 
-            if (!is_null($fileName)) {
+            if ((!is_null($img) && !is_null($imgPath) && !is_null($fileName))  ||
+                (is_null($img) && !is_null($imgPath) && !is_null($fileName))
+            ) {
                 $article->setImage($fileName);
-                } else {
+                } elseif (is_null($img) && is_null($imgPath) && is_null($fileName)) {
                     $article->setImage(null);
                     $article->setImagePath(null);
                 }
@@ -141,7 +145,7 @@ class ArticleController extends Controller
             $em->persist($article);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('homepage'));
+            return $this->forward('AppBundle:Initial:initial');
         } else {
             throw new Exception('Form is not valid or not submitted');
         }
