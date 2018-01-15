@@ -17,6 +17,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Filesystem\Filesystem;
@@ -59,6 +60,7 @@ class ArticleController extends Controller
                     'id' => $article['id'],
                     'image' => $article['image'],
                     'date' => $date->format('d/m/Y'),
+                    'detail' => false,
                 ]
             );
             $toRender = $toRender."\n".$render->getContent();
@@ -216,5 +218,28 @@ class ArticleController extends Controller
         $em->flush();
 
         return new JsonResponse('ok');
+    }
+
+    /**
+     * @param Article $article
+     * @return Response
+     * @Route("/article/{id}", name="articledetail")
+     */
+    public function articleDetailAction(Article $article)
+    {
+        /** @var DateTime $date */
+        $date = $article->getDate();
+        return new Response(
+            $this->renderView('detail/articleDetail.html.twig',
+                [
+                    'text' => $article->getText(),
+                    'title' => $article->getTitle(),
+                    'id' => $article->getId(),
+                    'image' => $article->getImage(),
+                    'date' => $date->format('d/m/Y'),
+                    'detail' => true,
+                ]
+            )
+        );
     }
 }

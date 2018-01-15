@@ -5,7 +5,11 @@
                 <span><h4 style="display: inline; color: whitesmoke">{{ title }}</h4></span>
                 {% if app.user %}
                     <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar with button groups">
-                        <span style="color: lightgray; margin-right: 5px" >{{ date }}</span>
+
+                        {% if detail %}
+                            <span style="color: lightgray; margin-right: 5px" >{{ date }}</span>
+                        {% endif %}
+
                         <div class="btn-group mr-2" role="group" aria-label="Second group">
                             <a class="btn btn-secondary" href="{{ path('editarticle', {'id': id}) }}">
                                 <i class="float-right fa fa-edit"></i>
@@ -16,9 +20,11 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar with button groups">
-                        <span style="color: lightgray; margin-right: 5px" >{{ date }}</span>
-                    </div>
+                    {% if detail %}
+                        <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar with button groups">
+                            <span style="color: lightgray; margin-right: 5px" >{{ date }}</span>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
 
@@ -42,6 +48,12 @@
                 {% endif %}
                 {% if link2 is defined %}
                     <a href="#" class="card-link">{{ link2 }}</a>
+                {% endif %}
+
+                {% if not detail %}
+                    <hr>
+                    <a href="{{ path('articledetail', {'id': id}) }}" type="button" class="btn btn-secondary btn-sm">Commenter</a>
+                    <span class="float-right" >{{ date }}</span>
                 {% endif %}
             </div>
         </div>
