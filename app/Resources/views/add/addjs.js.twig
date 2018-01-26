@@ -102,19 +102,19 @@ var noImg = $('#no_img_input')
 {% if action == 'Edition' %}
 deleteimgbtn.bind('click', function() {
 
-    var jqxhr = $.ajax( "{{ path('delimg', {'id' : form.vars.data.id}) }}" )
-        .done(function() {
-            haveImg.hide();
-            noImg.show();
-            fileInput.val('');
-            haveImg.val('');
-            $('#appbundle_article_image').val('');
-            imgResetBool = true;
-        })
-        .fail(function() {
-            alert( "error" );
-        })
-        .always(function() {
-        });
+var jqxhr = $.ajax( "{{ path('delimg', {'id' : form.vars.data.id}) }}" )
+    .done(function() {
+        haveImg.hide();
+        noImg.show();
+        fileInput.val('');
+        haveImg.val('');
+        $('#appbundle_article_image').val('');
+        imgResetBool = true;
+    })
+    .fail(function() {
+        alert( "error" );
+    })
+    .always(function() {
+    });
 })
 {% endif %}
