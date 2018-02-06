@@ -1,0 +1,82 @@
+{% extends "initial/index.html.twig" %}
+
+{% block headcss %}
+{% endblock %}
+
+{% block headjs %}
+{% endblock %}
+
+{% block pagecontent %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-outline-success mb-3">
+                <div style="background-color: #51575d;" class="card-header">
+                    <h5 style="color: whitesmoke">Soutenez-nous !</h5>
+                </div>
+                <span style="max-height: 300px; overflow: hidden;" class="d-lg-none">
+                    <img class="card-img-top" src="{{ asset('img/deco/img_don.jpg') }}"
+                         alt="Card image cap">
+                </span>
+                <span style="max-height: 500px; overflow: hidden;" class="d-none d-lg-block">
+                    <img class="card-img-top" src="{{ asset('img/deco/img_don.jpg') }}"
+                         alt="Card image cap">
+                </span>
+                <div class="card-block">
+                    <p class="card-text">
+                        <div class="container">
+
+                    <p>Pour nous soutenir dans cette aventure incroyable, vous pouvez faire un don à l'association
+                        4iL.</p>
+
+                    <p>
+                        Le 4L trophy 2018 pour nous représente un budget de 9510€ réparti entre :
+                    <ul>
+                        <li>Inscription</li>
+                        <li>Achat véhicule</li>
+                        <li>Práparation véhicule</li>
+                        <li>Assurance</li>
+                        <li>Équipement et outillage</li>
+                        <li>Fournitures</li>
+                        <li>Frais imprévus</li>
+                        <li>Communication</li>
+                        <li>Vivres et équipements</li>
+                        <li>Péage et essence</li>
+                    </ul>
+                    Toute aide est donc grandement appréciée!
+                    </p>
+                    <p>Avant votre don, vous pouvez en apprendre plus sur nous en consultant notre <a
+                                href="{{ asset('files/dossier_sponsoring.pdf') }}">dossier de sponsoring</a>.</p>
+
+                    <p>Si vous souhaitez avoir un emplacement publicitaire sur le site vous pouvez nous contacter : <a href="mailto:4ilasso@gmail.com">4ilasso@gmail.com</a>.</p>
+
+                    <p>Mille merci !</p>
+                    <div class="row justify-content-md-center align-items-center">
+                        <div class="col-md-auto align-self-center">
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                <input type="hidden" name="cmd" value="_s-xclick">
+                                <input type="hidden" name="hosted_button_id" value="H8U4JPS7AQJ76">
+                                <input type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_LG.gif"
+                                       border="0" name="submit" alt="PayPal, le réflexe sécurité pour payer en ligne">
+                                <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif"
+                                     width="1"
+                                     height="1">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        $('#menu-home').removeClass('active');
+        $('#menu-don').addClass('active');
+        $('.footer').css('opacity', '1');
+    </script>
+{% endblock %}

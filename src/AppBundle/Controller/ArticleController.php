@@ -190,7 +190,12 @@ class ArticleController extends Controller
         $this->identityChecker();
 
         $fs = new Filesystem();
-        $fs->remove([$this->getParameter('image_directory').$article->getImage()]);
+        $imagePath = $this->getParameter('image_directory').$article->getImage();
+
+        if(file_exists($imagePath) && !is_dir($imagePath)) {
+            $fs->remove([$imagePath]);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($article);
         $em->flush();
@@ -207,8 +212,12 @@ class ArticleController extends Controller
         $this->identityChecker();
 
         $image = $article->getImage();
+        $imagePath = $this->getParameter('image_directory').$image;
         $fs = new Filesystem();
-        $fs->remove([$this->getParameter('image_directory').$image]);
+
+        if(file_exists($imagePath) && !is_dir($imagePath)) {
+            $fs->remove([$this->getParameter('image_directory').$image]);
+        }
 
         $article->setImagePath(null);
         $article->setImage(null);
