@@ -29,17 +29,11 @@
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('homepage') }}">Home</a>
+                <li class="nav-item active" id="menu-home">
+                    <a class="nav-link" href="{{ path('homepage') }}"><i class="fa fa-home"></i> Accueil</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('notmapped') }}">Sponsors</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('notmapped') }}">Hulule</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('notmapped') }}">Géolocalisation</a>
+                <li class="nav-item" id="menu-don">
+                    <a class="nav-link" href="{{ path('don') }}"><i class="fa fa-gift"></i> Faire un don</a>
                 </li>
             </ul>
         </div>

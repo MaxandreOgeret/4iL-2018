@@ -17,13 +17,18 @@ use Symfony\Component\HttpFoundation\Request;
 
 class InitialController extends Controller
 {
-
-
     /**
      * @Route("/", name="homepage")
      */
     public function initialAction() {
         return $this->render(':initial:index.html.twig');
+    }
+
+    /**
+     * @Route("/don", name="don")
+     */
+    public function donAction() {
+        return $this->render(':initial:don.html.twig');
     }
 
     /**

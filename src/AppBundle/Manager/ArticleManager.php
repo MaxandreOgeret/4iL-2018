@@ -29,6 +29,11 @@ class ArticleManager
         }
 
         if ($this->imageStreamValid($source)) {
+
+            if (!is_dir($this->imageDirectory)) {
+                mkdir($this->imageDirectory);
+            }
+
             $destination = fopen($this->imageDirectory.$fileName, 'w');
             stream_copy_to_stream($source, $destination);
             fclose($source);
